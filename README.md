@@ -7,17 +7,15 @@
 
 ## ⚙️ Features
 
-- 🔒 Routes all scans via TOR using ProxyChains4
-- 🎭 Generates random decoy IP addresses
-- 📜 Supports multiple scan modes:
-  - Quick TCP Scan (Top 100 ports)
-  - Service Detection with NSE
-  - UDP & Fragmentation + optional vulnerability scripts
-- 🧪 Encrypts output using GPG AES256
-- 🧼 Secure self-destruction of logs after 10 minutes
-- 📌 SHA256 integrity verification of encrypted files
-- 📡 TOR exit node verification with failover
-- 🧾 Logging via `logger` and `tmux` for event notification
+ - 🔒 Routes all scans via TOR using ProxyChains4
+ - 🎭 Generates random decoy IP addresses
+ - 📜 Supports multiple scan modes:
+ - Quick TCP Scan (Top 100 ports)
+ - Service Detection with NSE
+ - UDP & Fragmentation + optional vulnerability scripts
+ - 🧼 Secure self-destruction of logs after 10 minutes
+ - 📡 TOR exit node verification with failover
+ - 🧾 Logging via `logger` and `tmux` for event notification
 
 ---
 
@@ -48,6 +46,14 @@ sudo ./exrecon-install.sh
 
 ---
 
+## ⚙️ What will Installer Do
+
+1. Ensure dependencies (nmap, proxychains4, tor, curl, nc) are installed
+2. Configure /etc/proxychains4.conf to use TOR
+3. Set executable permissions
+
+---
+
 ## 🚀 Usage
 
 ```bash
@@ -63,11 +69,15 @@ chmod +x exrecon.sh
 
 ## 📁 Output
 
-- Encrypted scan logs saved in: `~/.tor_scan_logs/`
-- Each scan includes:
-  - `scan_<timestamp>.txt.gpg`
-  - SHA256 checksum
-  - Logged metadata in encrypted `log_summary.txt.gpg`
+- Scan logs saved in: `/home/kali/`
+
+---
+
+## 🔐 Notes
+
+1. Run as root for SYN scans and decoy mode.
+2. Ensure TOR is active; the script auto-starts it if needed.
+3. All traffic is routed through TOR via proxychains4.
 
 ---
 
@@ -85,4 +95,4 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 ## 🧠 Author
 ExRecon
-Developed as part of the Offensive Security (The Grater Good)
+Developed as part of the Offensive Security (The Grater Good) ❤️‍🔥❤️‍🔥❤️‍🔥
