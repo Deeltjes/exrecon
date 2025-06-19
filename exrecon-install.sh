@@ -8,18 +8,17 @@ set -e
 echo "[+] Updating package lists..."
 sudo apt update
 
-# Install dependencies
+# Install dependencies (netcat-openbsd used instead of virtual netcat)
 REQUIRED_PACKAGES=(
   nmap
   tor
   proxychains4
   curl
   gpg
-  netcat
+  netcat-openbsd
   tmux
   coreutils
   openssl
-  macchanger
 )
 
 echo "[+] Installing required packages: ${REQUIRED_PACKAGES[*]}"
@@ -48,4 +47,4 @@ for tool in nmap proxychains4 curl gpg nc tmux; do
   echo "[+] $tool is present."
 done
 
-echo "[+] All dependencies installed successfully. ExRecon is ready to run!"
+echo "[+] All dependencies installed successfully. ExRecon is a ready to run!"
