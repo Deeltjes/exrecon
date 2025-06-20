@@ -4,7 +4,7 @@ Thank you for your interest in contributing to ExRecon! We welcome improvements,
 🛠️ How to Contribute
 Fork the repository
 Clone your fork locally:
-git clone https://github.com/yourusername/exrecon.git
+git clone https://github.com/ExRecon/exrecon.git
 
 Create a feature branch:
 git checkout -b feature/your-feature-name
