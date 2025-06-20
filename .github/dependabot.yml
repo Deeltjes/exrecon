@@ -1,0 +1,7 @@
+version: 2
+updates:
+  # For shell scripts using GitHub Actions or Docker
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
