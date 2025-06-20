@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# === ExRecon Installer Script ===
-# Description: Installs all dependencies required for the ExRecon TOR Nmap Automation script.
+# === ExRecon Dependencies Installer ===
+# Installs all required tools for ExRecon to function.
 
 set -e
 
-echo "[+] Updating package lists..."
+echo "[+] Updating package list..."
 sudo apt update
 
-# Install dependencies (netcat-openbsd used instead of virtual netcat)
-REQUIRED_PACKAGES=(
+# Required tools
+packages=(
   nmap
   tor
   proxychains4
@@ -19,32 +19,25 @@ REQUIRED_PACKAGES=(
   tmux
   coreutils
   openssl
+  enscript
+  ghostscript
+  pandoc
+  nikto
 )
 
-echo "[+] Installing required packages: ${REQUIRED_PACKAGES[*]}"
-sudo apt install -y "${REQUIRED_PACKAGES[@]}"
+echo "[+] Installing packages: ${packages[*]}"
+sudo apt install -y "${packages[@]}"
 
-# Ensure TOR ControlPort is enabled
-TORRC_PATH="/etc/tor/torrc"
-echo "[+] Ensuring TOR ControlPort is configured..."
-if ! grep -q "^ControlPort 9051" "$TORRC_PATH"; then
-  echo "ControlPort 9051" | sudo tee -a "$TORRC_PATH"
+# Ensure TOR control config
+TORRC="/etc/tor/torrc"
+if ! grep -q "^ControlPort 9051" "$TORRC"; then
+  echo "ControlPort 9051" | sudo tee -a "$TORRC"
 fi
-if ! grep -q "^CookieAuthentication 0" "$TORRC_PATH"; then
-  echo "CookieAuthentication 0" | sudo tee -a "$TORRC_PATH"
+if ! grep -q "^CookieAuthentication 0" "$TORRC"; then
+  echo "CookieAuthentication 0" | sudo tee -a "$TORRC"
 fi
 
 echo "[+] Restarting TOR service..."
 sudo systemctl restart tor
 
-# Final checks
-echo "[+] Validating tools..."
-for tool in nmap proxychains4 curl gpg nc tmux; do
-  if ! command -v "$tool" >/dev/null; then
-    echo "[!] $tool is not installed properly."
-    exit 1
-  fi
-  echo "[+] $tool is present."
-done
-
-echo "[+] All dependencies installed successfully. ExRecon is a ready to run!"
+echo "[✓] All dependencies installed. ExRecon is ready to go."

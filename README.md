@@ -1,98 +1,108 @@
-
 # 🛡️ ExRecon - Ultimate TOR Nmap Automation
 
-**ExRecon** is a stealth-oriented reconnaissance and scanning utility designed for Kali Linux. It automates advanced Nmap scans over the TOR network, encrypts logs, verifies anonymity, and self-destructs sensitive files to maximize OPSEC.
+ExRecon is a stealth-oriented reconnaissance and scanning utility designed for **Kali Linux**. It automates advanced Nmap scans over the **TOR network**, validates anonymity, logs results in clean summaries, and allows optional log viewing — all while supporting multiple recon modes.
 
 ---
 
 ## ⚙️ Features
 
- - 🔒 Routes all scans via TOR using ProxyChains4
- - 🎭 Generates random decoy IP addresses
- - 📜 Supports multiple scan modes:
- - Quick TCP Scan (Top 100 ports)
- - Service Detection with NSE
- - UDP & Fragmentation + optional vulnerability scripts
- - 🧼 Secure self-destruction of logs after 10 minutes
- - 📡 TOR exit node verification with failover
- - 🧾 Logging via `logger` and `tmux` for event notification
+| Capability            | Description                                                                 |
+|----------------------|-----------------------------------------------------------------------------|
+| **TOR integration**  | Routes all scans through TOR using proxychains4, and rotates exit nodes     |
+| **Auto dependency check** | Detects and installs required tools like Nmap, Nikto, TOR, enscript, and more |
+| **Modular scans**     | User selects multiple scan types simultaneously                             |
+| **Service detection** | Uses Nmap scripts and custom UA strings to detect services behind firewalls  |
+| **Firewall evasion**  | Spoofs MAC address, modifies TTL, and optionally uses decoys                 |
+| **Nikto web audit**   | Launches Nikto after detecting HTTP/HTTPS ports                              |
+| **Live result viewer**| Lets the user preview results using bat, less, or xdg-open                   |
+| **Formatted reporting**| Generates .txt and .pdf scan summaries with deltas vs previous scan         |
+| **Version-aware decoys**| Uses --decoy only if supported by the installed Nmap version               |
 
 ---
 
 ## 🛠️ Dependencies
 
-The following packages are required:
-
+ExRecon automatically checks and installs the following:
 - `nmap`
 - `proxychains4`
 - `tor`
 - `curl`
 - `gpg`
 - `tmux`
-- `logger`
-- `netcat` or `nc`
+- `netcat-openbsd`
 - `openssl`
+- `enscript`
+- `ghostscript`
+- `pandoc`
+- `nikto`
 
 ---
 
 ## 🔧 Installation
-
-Run the installer to set up dependencies and permissions:
-
-```bash
-chmod +x exrecon-install.sh
-sudo ./exrecon-install.sh
-```
-
----
-
-## ⚙️ What will Installer Do
-
-1. Ensure dependencies (nmap, proxychains4, tor, curl, nc) are installed
-2. Configure /etc/proxychains4.conf to use TOR
-3. Set executable permissions
-
----
-
-## 🚀 Usage
 
 ```bash
 chmod +x exrecon.sh
 ./exrecon.sh
 ```
 
-1. Enter your target domain or IP address.
-2. Choose a scan type.
-3. Sit back and let ExRecon handle TOR, decoys, scanning, encryption, and cleanup.
+On first run, ExRecon will:
+- Ensure all required tools are installed
+- Patch `/etc/tor/torrc` to allow TOR control via `ControlPort`
+- Rotate TOR circuits before each scan
+- Create log storage directory `~/tor_scan_logs`
 
 ---
 
-## 📁 Output
+## 🚀 Usage
 
-- Scan logs saved in: `/home/kali/`
+```bash
+./exrecon.sh
+```
+
+- Enter target domain or IP when prompted
+- Select one or more scan modes (comma-separated)
+- Wait for scan to finish and optionally view results
+
+---
+
+## 📁 Output Directory
+
+```
+~/tor_scan_logs/
+```
+
+- Raw scan logs: `scan_<timestamp>.*`
+- Summary Report: `scan_summary_<timestamp>.txt`
+- Printable PDF: `scan_summary_<timestamp>.pdf`
+- Anomaly comparison: `scan_summary_<timestamp>.delta`
 
 ---
 
 ## 🔐 Notes
 
-1. Run as root for SYN scans and decoy mode.
-2. Ensure TOR is active; the script auto-starts it if needed.
-3. All traffic is routed through TOR via proxychains4.
+- 🔑 Run as root for full feature access (SYN scans, MAC spoofing)
+- 🚦 TOR is validated before every scan; circuit is rotated
+- 🌐 All traffic is routed via TOR using ProxyChains
+- 🧹 Self-destruct functionality has been disabled in this version for report preservation
 
 ---
 
 ## ⚠️ Legal Warning
 
-This tool is intended for **educational and authorized penetration testing** only. Do not use it on networks or systems you do not own or have explicit written permission to test.
+**ExRecon is intended strictly for educational and authorized penetration testing purposes.**
+
+⚠️ Do **not** use this tool against systems/networks you do not own or lack **explicit written permission** to test. Misuse can result in criminal charges.
 
 ---
 
 ## 📜 License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License — see `LICENSE` file for details.
 
 ---
 
 ## 🧠 Author
-ExRecon
-Developed as part of the Offensive Security (The Grater Good) ❤️‍🔥❤️‍🔥❤️‍🔥
+
+**ExRecon** developed by **ExRecon** as part of Offensive Security tooling — *for the Greater Good*. ❤️‍🔥
+
+> "Master Kali Linux, Excel in Offensive Security"
