@@ -1,0 +1,11 @@
+name: "Dependabot Updates"
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Confirm workflow presence
+        run: echo "Dependabot workflow is configured."
