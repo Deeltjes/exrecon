@@ -69,7 +69,7 @@ check_nikto() {
 
 # Function: Check if decoy is supported
 check_decoy_supported() {
-  if ! nmap --help | grep -q "--decoy"; then
+  if ! nmap --help | grep -q "\-D"; then
     return 1
   fi
   return 0
@@ -120,9 +120,9 @@ echo "[+] Active TOR Exit IP: $tor_ip"
 
 use_decoy=""
 if check_decoy_supported; then
-  use_decoy="--decoy $decoy_list"
+  use_decoy="-D $decoy_list"
 else
-  echo "[!] Nmap does not support --decoy on this system. Proceeding without it."
+  echo "[!] Nmap does not support -D on this system. Proceeding without it."
 fi
 
 for scan_type in "${selected_scans[@]}"; do
