@@ -7,6 +7,7 @@ set -e
 
 echo "[+] Updating package list..."
 sudo apt update
+sudo apt upgrade
 
 # Required tools
 packages=(
